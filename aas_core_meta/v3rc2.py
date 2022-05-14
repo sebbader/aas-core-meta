@@ -2260,15 +2260,21 @@ class Submodel_element_struct(Submodel_element):
         self.value = value
 
 
+# fmt: off
 @abstract
 @invariant(
-    lambda self: self.category == "CONSTANT"
-    or self.category == "PARAMETER"
-    or self.category == "VARIABLE",
-    "Constraint AASd-090: For data elements category shall be one "
-    "of the following values: CONSTANT, PARAMETER or VARIABLE",
+    lambda self:
+    not (self.category is not None)
+    or (
+        self.category == "CONSTANT"
+        or self.category == "PARAMETER"
+        or self.category == "VARIABLE",
+        "Constraint AASd-090: For data elements category shall be one "
+        "of the following values: CONSTANT, PARAMETER or VARIABLE",
+    )
 )
 @reference_in_the_book(section=(5, 7, 7, 5))
+# fmt: on
 class Data_element(Submodel_element):
     """
     A data element is a submodel element that is not further composed out of
